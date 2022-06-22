@@ -1,0 +1,40 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: whitesmoke;
+    color: #130e0f;
+}
+button{
+    background-color: #016f32;
+    padding: 10px 20px;
+    width: 150px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    border: 1px solid #016f32;
+    border-radius: 4px;
+    margin: 2px;
+}
+#input-el{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #016f32;
+    margin-bottom: 4px;
+}
+#del-btn{
+    background-color: white;
+    color: #016f32;
+}
+#log-btn{
+    background-color: orangered;
+    border: 1px solid black;
+    width: fit-content;
+}
+.team_img{
+    width: 100px;
+    border-radius: 100%;
+    margin: 10px;  
+}
+.container{
+    text-align: center;
+}
