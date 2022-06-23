@@ -1,14 +1,16 @@
 <h1>#Day 6</h1>
 <hr>
-<p> Day  6 tasks are on <s>Javascript <img src="https://www.freepnglogos.com/uploads/javascript-png/javascript-logo-transparent-logo-javascript-images-3.png" alt="javascript" style="width:20px; height: 20px"> and its based on exercises from the book <b> Eloquent_Javascript</b> - Functions and a kata from <a href="https://www.codewars.com"> Codewars </a><img src="https://www.codewars.com/packs/assets/logo.61192cf7.svg" alt="codewars" style="width:20px; height: 20px">.</s> </p>
+Day 6 tasks are on Javascript<br><br>
+The question is from the book <b> Eloquent_Javascript</b> - Functions and a kata from <a href="https://www.codewars.com"> Codewars </a><img src="https://www.codewars.com/packs/assets/logo.61192cf7.svg" alt="codewars" style="width:40px;height:40px">
 <br>
-<h4>
-Tasks</h4>
+<h2>Tasks</h4>
 <hr>
-<ul>
-<li> countBs - Its a function that count the occurrence of 'B' and returns the total number.
-<span> This function can be modified to search for occurrence of any character.</span>
-<li> Number of expandedForm - You will be given a number and you will need to return it as a string in Expanded Form. 
-<span>Using the knowledge of STRINGS | MATHEMATICS | ALGORITHMS | FUNDAMENTALS </span>
-</ul>
+<h4> 1 - COUNTBS </h4>
+Its a function that count the occurrence of 'B' and returns the total number.
+This function can be modified to search for occurrence of any character.
+<h4> 2 - ExpandedForm</h4>
+The task is to create a function that returns a string from a number(input) in Expanded Form. 
+Using the knowledge of:
+<b>STRINGS | MATHEMATICS | ALGORITHMS | FUNDAMENTALS </b>
+
 <span><em>Ongoing...</em></span>
