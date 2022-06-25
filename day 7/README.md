@@ -3,6 +3,7 @@
 <h2>Languages</h2>
 <div>
 - Javascript
+- C
 </div>
 
 
@@ -15,3 +16,5 @@ Complete the solution so that the function will break up camel casing, using a s
 "identifier"   =>  "identifier"
 ""             =>  ""
 </div>
+
+<h3>2 - Reverse - Codewars Kata</h3>
