@@ -13,4 +13,4 @@ The task is to create a function that returns a string from a number(input) in E
 Using the knowledge of:
 <b>STRINGS | MATHEMATICS | ALGORITHMS | FUNDAMENTALS </b>
 
-<span><em>Ongoing...</em></span>
+<span><em>On to the next 😎</em></span>
