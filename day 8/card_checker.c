@@ -7,6 +7,7 @@ bool visa(long number);
 bool mc(long number);
 bool amex(long number);
 
+
 int main(void)
 {
     long number;
