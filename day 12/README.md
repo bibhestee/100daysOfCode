@@ -14,9 +14,9 @@
 
 - If input data is invalid you should return 0 (as in no breaks are needed if we do not have any chocolate to split). Input will always be a non-negative integer.
 
-Code - (Breaking Chocolate problem)[https://github.com/bibhestee/100daysOfCode/day 12/breaking_chocolate.c]
+    Code - [Breaking Chocolate problem](https://github.com/bibhestee/100daysOfCode/day%12/breaking_chocolate.c)
 
 ### Update
 ```
-I'm implementing the skills I learned today about problem solving, data structure and algorithm 😊🎉
+I'm implementing the skills I learned about problem solving, data structure and algorithm 😊🎉
 ```
