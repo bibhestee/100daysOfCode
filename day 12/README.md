@@ -24,6 +24,23 @@
 - Your task is to return number of people who are still in the bus after the last bus station (after the last array). Even though it is the last bus stop, the bus is not empty and some people are still in the bus, and they are probably sleeping there.
 
     Code - [Number of People in the Bus](https://github.com/bibhestee/100daysOfCode/day%12/bus_count.c)
+
+### 3 - Sum of a sequence
+- Your task is to make function, which returns the sum of a sequence of integers.
+
+- The sequence is defined by 3 non-negative values: begin, end, step (inclusive).
+
+- If begin value is greater than the end, function should returns 0
+
+Examples
+
+		2,2,2 --> 2
+		2,6,2 --> 12 (2 + 4 + 6)
+		1,5,1 --> 15 (1 + 2 + 3 + 4 + 5)
+		1,5,3  --> 5 (1 + 4)
+
+    Code - [Sum of a sequence](https://github.com/bibhestee/100daysOfCode/day%12/sum-of-a-sequence.c)
+
 ### Update
 ```
 I'm implementing the skills I learned about problem solving, data structure and algorithm 😊🎉
