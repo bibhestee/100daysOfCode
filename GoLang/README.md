@@ -3,4 +3,5 @@
 ## Concepts
 
 - Control Structures
-- Array, Slices and Maps
+- Types: Prim types, Array, Slices and Maps
+- Functions
