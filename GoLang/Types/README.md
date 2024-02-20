@@ -30,3 +30,5 @@
   - []int{}
 - Maps
   - map[string]string
+- Structs
+  - type StructName struct {}

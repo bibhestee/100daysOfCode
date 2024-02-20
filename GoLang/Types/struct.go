@@ -25,7 +25,7 @@ func main() {
     []string{"Java", ".Net"},
   }
 
-  info := fmt.Sprintf("%s is a %d years old %s with proficiency in %s", person.name, person.age, person.occupation, person.skills)
+  info := fmt.Sprintf("%s is a %d years old %s and proficiency in %s", person.name, person.age, person.occupation, person.skills)
   fmt.Println(info)
 
   // Anonymous Struct
@@ -37,5 +37,6 @@ func main() {
     5,
     }
 
-  fmt.Println(engineer)
+  output := fmt.Sprintf("%s with %d years of experience.", engineer.Field, engineer.YOE)
+  fmt.Println(output)
 }
