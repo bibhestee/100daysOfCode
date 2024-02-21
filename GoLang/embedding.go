@@ -3,7 +3,8 @@ import "fmt"
 
 /*
  * Embedding is not Inheritance
- * Embedding can be used to access methods declared by other methods
+ * Embedding can be used to access fields and
+ * methods declared by existing struct
  */
 
 // Person
