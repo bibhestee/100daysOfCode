@@ -7,5 +7,6 @@ I will be coding in multiple languages
 - Python
 - Javascript
 - Html/Css
+- Go language
 
 Let's get it started 😊🙌...
