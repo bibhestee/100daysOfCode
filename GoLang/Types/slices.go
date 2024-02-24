@@ -1,6 +1,7 @@
 package main
 import (
   "fmt"
+  "my-module/lib/pretty"
   )
 
 // Slices
@@ -17,9 +18,9 @@ func main() {
   // Using empty slice literal
   var list5 = []int{}
   list = append(list, 8, 9, 7)
-  fmt.Println("list 1:", list)
-  fmt.Println("list 2:", list2)
-  fmt.Println("list 3:", list3)
-  fmt.Println("list 4:", list4)
-  fmt.Println("list 5:", list5)
+  fmt.Println("list 1:", pretty.List(list))
+  fmt.Println("list 2:", pretty.List(list2))
+  fmt.Println("list 3:", pretty.List(list3))
+  fmt.Println("list 4:", pretty.List(list4))
+  fmt.Println("list 5:", pretty.List(list5))
 }
