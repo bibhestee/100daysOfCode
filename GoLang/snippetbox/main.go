@@ -29,8 +29,10 @@ func snippetCreate(res http.ResponseWriter, req *http.Request) {
     // Add a new header that let the user know which request methods are supported for this route
     res.Header().Set("Allow", "POST")
     // Send a 405 Method not allowed response
-    res.WriteHeader(405) // This method can only be called once
-    res.Write([]byte("Method No Allowed"))
+    // res.WriteHeader(405) // This method can only be called once
+    // res.Write([]byte("Method No Allowed"))
+    // Use http.Error() to send a 405 status code and "Method Not Allowed" message as the response body
+    http.Error(res, "Method Not Allowed", 405)
     return
   }
   res.Write([]byte("Create a new snippet..."))
