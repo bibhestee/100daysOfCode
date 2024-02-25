@@ -1,8 +1,10 @@
 package main
 
 import (
+  "fmt"
   "log"
   "net/http"
+  "strconv"
 )
 
 // Define a home handler function which writes a byte slice containing
@@ -18,7 +20,12 @@ func home(res http.ResponseWriter, req *http.Request) {
 
 // Display a specific snippet
 func snippetView(res http.ResponseWriter, req *http.Request) {
-  res.Write([]byte("Display a specific snippet..."))
+  id, err := strconv.Atoi(req.URL.Query().Get("id"))
+  if err != nil || id < 1 {
+    http.NotFound(res, req)
+    return
+  }
+  fmt.Fprintf(res, "Display a specific snippet with ID %d...", id)
 }
 
 // Create a new snippet
