@@ -23,6 +23,13 @@ func snippetView(res http.ResponseWriter, req *http.Request) {
 
 // Create a new snippet
 func snippetCreate(res http.ResponseWriter, req *http.Request) {
+  // Restrict this route to act on POST requests only
+  if req.Method != "POST" {
+    // Send a 405 Method not allowed response
+    res.WriteHeader(405) // This method can only be called once
+    res.Write([]byte("Method No Allowed"))
+    return
+  }
   res.Write([]byte("Create a new snippet..."))
 }
 
