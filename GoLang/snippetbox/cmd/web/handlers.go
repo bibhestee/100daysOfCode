@@ -8,7 +8,7 @@ import (
   "strconv"
 )
 
-func home(res http.ResponseWriter, req *http.Request) {
+func (app *application) home(res http.ResponseWriter, req *http.Request) {
   if req.URL.Path != "/" {
     http.NotFound(res, req)
     return
@@ -22,20 +22,20 @@ func home(res http.ResponseWriter, req *http.Request) {
   // Use the template.ParseFiles() function to read the template file into a template set.
   ts, err := template.ParseFiles(files...)
   if err != nil {
-    log.Print(err.Error())
+    app.errorLog.Print(err.Error())
     http.Error(res, "Internal Server Error", 500)
     return
   }
 
   err = ts.ExecuteTemplate(res, "base", nil)
   if err != nil {
-    log.Print(err.Error())
+    app.errorLog.Print(err.Error())
     http.Error(res, "Internal Server Error", 500)
   }
 }
 
 
-func snippetView(res http.ResponseWriter, req *http.Request) {
+func (app *application) snippetView(res http.ResponseWriter, req *http.Request) {
   id, err := strconv.Atoi(req.URL.Query().Get("id"))
   if err != nil || id < 1 {
     http.NotFound(res, req)
@@ -45,7 +45,7 @@ func snippetView(res http.ResponseWriter, req *http.Request) {
   fmt.Fprintf(res, "Display a specific snippet with ID %d...", id)
 }
 
-func snippetCreate(res http.ResponseWriter, req *http.Request) {
+func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request) {
   if req.Method != http.MethodPost {
     res.Header().Set("Allow", http.MethodPost)
     http.Error(res, "Method Not Allowed", http.StatusMethodNotAllowed)
