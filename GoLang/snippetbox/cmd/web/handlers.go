@@ -2,6 +2,8 @@ package main
 
 import (
   "fmt"
+  "html/template"
+  "log"
   "net/http"
   "strconv"
 )
@@ -12,7 +14,24 @@ func home(res http.ResponseWriter, req *http.Request) {
     return
   }
 
-  res.Write([]byte("Hello from Snippetbox"))
+  files := []string{
+    "./ui/html/base.html",
+    "./ui/html/partials/nav.html",
+    "./ui/html/pages/home.html",
+  }
+  // Use the template.ParseFiles() function to read the template file into a template set.
+  ts, err := template.ParseFiles(files...)
+  if err != nil {
+    log.Print(err.Error())
+    http.Error(res, "Internal Server Error", 500)
+    return
+  }
+
+  err = ts.ExecuteTemplate(res, "base", nil)
+  if err != nil {
+    log.Print(err.Error())
+    http.Error(res, "Internal Server Error", 500)
+  }
 }
 
 
