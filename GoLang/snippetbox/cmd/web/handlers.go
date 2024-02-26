@@ -9,7 +9,7 @@ import (
 
 func (app *application) home(res http.ResponseWriter, req *http.Request) {
   if req.URL.Path != "/" {
-    http.NotFound(res, req)
+    app.notFound(res)
     return
   }
 
@@ -22,14 +22,14 @@ func (app *application) home(res http.ResponseWriter, req *http.Request) {
   ts, err := template.ParseFiles(files...)
   if err != nil {
     app.errorLog.Print(err.Error())
-    http.Error(res, "Internal Server Error", 500)
+    app.serverError(res, err)
     return
   }
 
   err = ts.ExecuteTemplate(res, "base", nil)
   if err != nil {
     app.errorLog.Print(err.Error())
-    http.Error(res, "Internal Server Error", 500)
+    app.serverError(res, err)
   }
 }
 
@@ -37,7 +37,7 @@ func (app *application) home(res http.ResponseWriter, req *http.Request) {
 func (app *application) snippetView(res http.ResponseWriter, req *http.Request) {
   id, err := strconv.Atoi(req.URL.Query().Get("id"))
   if err != nil || id < 1 {
-    http.NotFound(res, req)
+    app.notFound(res)
     return
   }
 
@@ -47,7 +47,7 @@ func (app *application) snippetView(res http.ResponseWriter, req *http.Request) 
 func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request) {
   if req.Method != http.MethodPost {
     res.Header().Set("Allow", http.MethodPost)
-    http.Error(res, "Method Not Allowed", http.StatusMethodNotAllowed)
+    app.clientError(res, http.StatusMethodNotAllowed)
     return
   }
 
