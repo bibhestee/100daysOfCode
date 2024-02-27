@@ -13,7 +13,7 @@ import (
 type application struct {
   errorLog *log.Logger
   infoLog *log.Logger
-  snippets *model.SnippetModel
+  snippets *models.SnippetModel
 }
 
 
@@ -40,7 +40,7 @@ func main() {
   app := &application{
     errorLog: errorLog,
     infoLog: infoLog,
-    snippets: &models.SnippetModel{DB: db}
+    snippets: &models.SnippetModel{DB: db},
   }
 
 
