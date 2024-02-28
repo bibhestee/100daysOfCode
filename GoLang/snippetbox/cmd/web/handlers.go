@@ -1,10 +1,12 @@
 package main
 
 import (
+  "errors"
   "fmt"
   "html/template"
   "net/http"
   "strconv"
+  "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/models"
 )
 
 func (app *application) home(res http.ResponseWriter, req *http.Request) {
@@ -41,7 +43,17 @@ func (app *application) snippetView(res http.ResponseWriter, req *http.Request) 
     return
   }
 
-  fmt.Fprintf(res, "Display a specific snippet with ID %d...", id)
+  snippet, err := app.snippets.Get(id)
+  if err != nil {
+    if errors.Is(err, models.ErrNoRecord) {
+      app.notFound(res)
+    } else {
+      app.serverError(res, err)
+    }
+    return
+  }
+
+  fmt.Fprintf(res, "%+v", snippet)
 }
 
 func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request) {
