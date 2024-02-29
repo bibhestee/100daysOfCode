@@ -28,7 +28,14 @@ func (app *application) home(res http.ResponseWriter, req *http.Request) {
     return
   }
 
-  err = ts.ExecuteTemplate(res, "base", nil)
+  // Query the database
+  snippets, err := app.snippets.Latest()
+  if err != nil {
+    app.serverError(res, err)
+    return
+  }
+
+  err = ts.ExecuteTemplate(res, "base", snippets)
   if err != nil {
     app.errorLog.Print(err.Error())
     app.serverError(res, err)
