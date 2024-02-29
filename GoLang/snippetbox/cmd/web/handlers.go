@@ -60,8 +60,24 @@ func (app *application) snippetView(res http.ResponseWriter, req *http.Request) 
     return
   }
 
-  fmt.Fprintf(res, "%+v", snippet)
+  files := []string{
+    "./ui/html/base.html",
+    "./ui/html/partials/nav.html",
+    "./ui/html/pages/view.html",
+  }
+
+  ts, err := template.ParseFiles(files...)
+  if err != nil {
+    app.serverError(res, err)
+    return
+  }
+
+  err = ts.ExecuteTemplate(res, "base", snippet)
+  if err != nil {
+    app.serverError(res, err)
+  }
 }
+
 
 func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request) {
   if req.Method != http.MethodPost {
