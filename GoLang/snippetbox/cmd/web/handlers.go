@@ -3,7 +3,6 @@ package main
 import (
   "errors"
   "fmt"
-  "html/template"
   "net/http"
   "strconv"
   "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/models"
@@ -15,19 +14,6 @@ func (app *application) home(res http.ResponseWriter, req *http.Request) {
     return
   }
 
-  files := []string{
-    "./ui/html/base.html",
-    "./ui/html/partials/nav.html",
-    "./ui/html/pages/home.html",
-  }
-  // Use the template.ParseFiles() function to read the template file into a template set.
-  ts, err := template.ParseFiles(files...)
-  if err != nil {
-    app.errorLog.Print(err.Error())
-    app.serverError(res, err)
-    return
-  }
-
   // Query the database
   snippets, err := app.snippets.Latest()
   if err != nil {
@@ -35,15 +21,9 @@ func (app *application) home(res http.ResponseWriter, req *http.Request) {
     return
   }
 
-  data := &templateData{
+  app.render(res, http.StatusOK, "home.html", &templateData{
     Snippets: snippets,
-  }
-
-  err = ts.ExecuteTemplate(res, "base", data)
-  if err != nil {
-    app.errorLog.Print(err.Error())
-    app.serverError(res, err)
-  }
+  })
 }
 
 
@@ -64,26 +44,9 @@ func (app *application) snippetView(res http.ResponseWriter, req *http.Request) 
     return
   }
 
-  files := []string{
-    "./ui/html/base.html",
-    "./ui/html/partials/nav.html",
-    "./ui/html/pages/view.html",
-  }
-
-  ts, err := template.ParseFiles(files...)
-  if err != nil {
-    app.serverError(res, err)
-    return
-  }
-
-  data := &templateData{
+  app.render(res, http.StatusOK, "view.html", &templateData{
     Snippet: snippet,
-  }
-
-  err = ts.ExecuteTemplate(res, "base", data)
-  if err != nil {
-    app.serverError(res, err)
-  }
+  })
 }
 
 
