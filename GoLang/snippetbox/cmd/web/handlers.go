@@ -6,13 +6,10 @@ import (
   "net/http"
   "strconv"
   "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/models"
+  "github.com/julienschmidt/httprouter"
 )
 
 func (app *application) home(res http.ResponseWriter, req *http.Request) {
-  if req.URL.Path != "/" {
-    app.notFound(res)
-    return
-  }
 
   // Query the database
   snippets, err := app.snippets.Latest()
@@ -29,7 +26,9 @@ func (app *application) home(res http.ResponseWriter, req *http.Request) {
 
 
 func (app *application) snippetView(res http.ResponseWriter, req *http.Request) {
-  id, err := strconv.Atoi(req.URL.Query().Get("id"))
+  params := httprouter.ParamsFromContext(req.Context())
+
+  id, err := strconv.Atoi(params.ByName("id"))
   if err != nil || id < 1 {
     app.notFound(res)
     return
@@ -53,11 +52,11 @@ func (app *application) snippetView(res http.ResponseWriter, req *http.Request) 
 
 
 func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request) {
-  if req.Method != http.MethodPost {
-    res.Header().Set("Allow", http.MethodPost)
-    app.clientError(res, http.StatusMethodNotAllowed)
-    return
-  }
+  res.Write([]byte("Display the form for creating a new snippet..."))
+}
+
+
+func (app *application) snippetCreatePost(res http.ResponseWriter, req *http.Request) {
 
   // Create some variables holding dummy data. We'll remove these later on
   // during the build.
@@ -70,5 +69,5 @@ func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request
     app.serverError(res, err)
   }
 
-  http.Redirect(res, req, fmt.Sprintf("/snippet/view?id=%d", id), http.StatusSeeOther)
+  http.Redirect(res, req, fmt.Sprintf("/snippet/view/%d", id), http.StatusSeeOther)
 }
