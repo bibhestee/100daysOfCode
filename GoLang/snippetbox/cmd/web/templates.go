@@ -4,6 +4,7 @@ import (
   "html/template"
   "path/filepath"
   "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/models"
+  "time"
 )
 
 
@@ -26,7 +27,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
     // Extract filename
     name := filepath.Base(page)
 
-    ts, err := template.ParseFiles("./ui/html/base.html")
+    ts, err := template.New(name).Funcs(functions).ParseFiles("./ui/html/base.html")
     if err != nil {
       return nil, err
     }
@@ -46,4 +47,14 @@ func newTemplateCache() (map[string]*template.Template, error) {
 
   return cache, nil
 
+}
+
+
+func humanDate(t time.Time) string {
+  return t.Format("02 Jan 2006 at 3:04pm")
+}
+
+
+var functions = template.FuncMap{
+  "humanDate": humanDate,
 }
