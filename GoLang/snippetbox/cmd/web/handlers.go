@@ -35,7 +35,11 @@ func (app *application) home(res http.ResponseWriter, req *http.Request) {
     return
   }
 
-  err = ts.ExecuteTemplate(res, "base", snippets)
+  data := &templateData{
+    Snippets: snippets,
+  }
+
+  err = ts.ExecuteTemplate(res, "base", data)
   if err != nil {
     app.errorLog.Print(err.Error())
     app.serverError(res, err)
