@@ -73,7 +73,7 @@ func (app *application) snippetView(res http.ResponseWriter, req *http.Request) 
   }
 
   data := &templateData{
-    Snippet: snippet
+    Snippet: snippet,
   }
 
   err = ts.ExecuteTemplate(res, "base", data)
