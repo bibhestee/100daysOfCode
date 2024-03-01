@@ -10,6 +10,14 @@ import (
 func (app *application) routes() http.Handler {
   router := httprouter.New()
 
+  router.NotFound = http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+    app.notFound(res)
+  })
+
+  router.MethodNotAllowed = http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+    app.clientError(res, http.StatusMethodNotAllowed)
+  })
+
   fileServer := http.FileServer(http.Dir("./ui/static"))
 
   router.Handler(http.MethodGet, "/static/*filepath", http.StripPrefix("/static", fileServer))
