@@ -52,7 +52,8 @@ func (app *application) snippetView(res http.ResponseWriter, req *http.Request) 
 
 
 func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request) {
-  res.Write([]byte("Display the form for creating a new snippet..."))
+  data := app.newTemplateData(req)
+  app.render(res, http.StatusOK, "create.html", data)
 }
 
 
@@ -71,3 +72,4 @@ func (app *application) snippetCreatePost(res http.ResponseWriter, req *http.Req
 
   http.Redirect(res, req, fmt.Sprintf("/snippet/view/%d", id), http.StatusSeeOther)
 }
+
