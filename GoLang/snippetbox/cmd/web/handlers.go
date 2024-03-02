@@ -58,13 +58,23 @@ func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request
 
 
 func (app *application) snippetCreatePost(res http.ResponseWriter, req *http.Request) {
+  // Parse the request form
+  err := req.ParseForm()
+  if err != nil {
+    app.clientError(res, http.StatusBadRequest)
+    return
+  }
 
-  // Create some variables holding dummy data. We'll remove these later on
-  // during the build.
-  title := "O snail"
-  content := "O snail\nClimb Mount Fuji,\nBut slowly, slowly!\n\n– Kobayashi Issa"
-  expires := 7
+  // Retrieve field data from form
+  title := req.PostForm.Get("title")
+  content := req.PostForm.Get("content")
+  expires, err := strconv.Atoi(req.PostForm.Get("expires"))
+  if err != nil {
+    app.clientError(res, http.StatusBadRequest)
+    return
+  }
 
+  // Add form data to database
   id, err := app.snippets.Insert(title, content, expires)
   if err != nil {
     app.serverError(res, err)
