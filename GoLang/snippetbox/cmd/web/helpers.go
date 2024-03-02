@@ -2,6 +2,7 @@ package main
 
 import (
   "bytes"
+  "errors"
   "fmt"
   "net/http"
   "runtime/debug"
@@ -61,11 +62,11 @@ func (app *application) decodePostForm(req *http.Request, dst any) error {
     return err
   }
 
-  err = app.formDecoder.Decode(dsn, req.PostForm)
+  err = app.formDecoder.Decode(dst, req.PostForm)
   if err != nil {
     var InvalidDecoderError *form.InvalidDecoderError
 
-    if error.As(err, &InvalidDecodeError) {
+    if errors.As(err, &InvalidDecoderError) {
       panic(err)
     }
     return err
