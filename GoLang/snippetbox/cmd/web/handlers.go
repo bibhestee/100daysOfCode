@@ -5,9 +5,8 @@ import (
   "fmt"
   "net/http"
   "strconv"
-  "github.com/go-playground/form/v4"
-  "github.com/bibhestee/100daysOfCode/Golang/snippetbox/internal/validator"
   "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/models"
+  "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/validator"
   "github.com/julienschmidt/httprouter"
 )
 
@@ -73,7 +72,7 @@ func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request
 func (app *application) snippetCreatePost(res http.ResponseWriter, req *http.Request) {
   var form snippetCreateForm
 
-  err = app.formDecoder.Decode(&form, req.PostForm)
+  err := app.formDecoder.Decode(&form, req.PostForm)
   if err != nil {
     app.clientError(res, http.StatusBadRequest)
     return
