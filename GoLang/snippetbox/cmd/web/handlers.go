@@ -5,6 +5,8 @@ import (
   "fmt"
   "net/http"
   "strconv"
+  "strings"
+  "unicode/utf8"
   "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/models"
   "github.com/julienschmidt/httprouter"
 )
@@ -71,6 +73,29 @@ func (app *application) snippetCreatePost(res http.ResponseWriter, req *http.Req
   expires, err := strconv.Atoi(req.PostForm.Get("expires"))
   if err != nil {
     app.clientError(res, http.StatusBadRequest)
+    return
+  }
+
+  // Validate data
+  fieldErrors := make(map[string]string)
+
+  if strings.TrimSpace(title) == "" {
+    fieldErrors["title"] = "This field cannot be blank"
+  } else if utf8.RuneCountInString(title) > 100 {
+    fieldErrors["title"] = "This field cannot be more than 100 characters long."
+  }
+
+  if strings.TrimSpace(content) == "" {
+    fieldErrors["content"] = "This field cannot be blank"
+  }
+
+  if expires != 1 && expires != 7 && expires != 365 {
+    fieldErrors["expires"] = "This field must equal 1, 7 or 365"
+  }
+
+  // Dump error to plain HTTP response if any
+  if len(fieldErrors) > 0 {
+    fmt.Fprint(res, fieldErrors)
     return
   }
 
