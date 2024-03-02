@@ -6,6 +6,7 @@ import (
   "net/http"
   "runtime/debug"
   "time"
+  "github.com/go-playground/form"
 )
 
 func (app *application) serverError(res http.ResponseWriter, err error) {
@@ -52,4 +53,23 @@ func (app *application) newTemplateData(req *http.Request) *templateData {
   return &templateData{
     CurrentYear: time.Now().Year(),
   }
+}
+
+func (app *application) decodePostForm(req *http.Request, dst any) error {
+  err := req.ParseForm()
+  if err != nil {
+    return err
+  }
+
+  err = app.formDecoder.Decode(dsn, req.PostForm)
+  if err != nil {
+    var InvalidDecoderError *form.InvalidDecoderError
+
+    if error.As(err, &InvalidDecodeError) {
+      panic(err)
+    }
+    return err
+  }
+
+  return nil
 }
