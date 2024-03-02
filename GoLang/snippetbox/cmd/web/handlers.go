@@ -5,16 +5,17 @@ import (
   "fmt"
   "net/http"
   "strconv"
+  "github.com/go-playground/form"
   "github.com/bibhestee/100daysOfCode/Golang/snippetbox/internal/validator"
   "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/internal/models"
   "github.com/julienschmidt/httprouter"
 )
 
 type snippetCreateForm struct {
-  Title string
-  Content string
-  Expires int
-  validator.Validator
+  Title string `form:"title"`
+  Content string `form:"content"`
+  Expires int `form:"expires"`
+  validator.Validator `form:"-"`
 }
 
 
@@ -70,24 +71,12 @@ func (app *application) snippetCreate(res http.ResponseWriter, req *http.Request
 
 
 func (app *application) snippetCreatePost(res http.ResponseWriter, req *http.Request) {
-  // Parse the request form
-  err := req.ParseForm()
+  var form snippetCreateForm
+
+  err = app.formDecoder.Decode(&form, req.PostForm)
   if err != nil {
     app.clientError(res, http.StatusBadRequest)
     return
-  }
-
-  // Retrieve expires field from PostForm
-  expires, err := strconv.Atoi(req.PostForm.Get("expires"))
-  if err != nil {
-    app.clientError(res, http.StatusBadRequest)
-    return
-  }
-
-  form := snippetCreateForm{
-    Title: req.PostForm.Get("title"),
-    Content: req.PostForm.Get("content"),
-    Expires: expires,
   }
 
   // Validate data
