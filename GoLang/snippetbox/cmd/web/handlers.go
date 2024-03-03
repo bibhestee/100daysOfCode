@@ -17,6 +17,13 @@ type snippetCreateForm struct {
   validator.Validator `form:"-"`
 }
 
+type userSignupForm struct {
+  Name string `form:"name"`
+  Email string `form:"email"`
+  Password string `form:"password"`
+  validator.Validator `form:"-"`
+}
+
 
 func (app *application) home(res http.ResponseWriter, req *http.Request) {
 
@@ -105,8 +112,11 @@ func (app *application) snippetCreatePost(res http.ResponseWriter, req *http.Req
 
 
 func (app *application) userSignup(res http.ResponseWriter, req *http.Request) {
-  fmt.Fprintln(res, "Display html form for signing up new user...")
+  data := app.newTemplateData(req)
+  data.Form = userSignupForm{}
+  app.render(res, http.StatusOK, "signup.html", data)
 }
+
 func (app *application) userSignupPost(res http.ResponseWriter, req *http.Request) {
   fmt.Fprintln(res, "Create a new user...")
 }
