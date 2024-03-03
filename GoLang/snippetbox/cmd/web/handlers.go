@@ -24,6 +24,12 @@ type userSignupForm struct {
   validator.Validator `form:"-"`
 }
 
+type userLoginForm struct {
+  Email string `form:"email"`
+  Password string `form:"password"`
+  validator.Validator `form:"-"`
+}
+
 
 func (app *application) home(res http.ResponseWriter, req *http.Request) {
 
@@ -120,12 +126,17 @@ func (app *application) userSignup(res http.ResponseWriter, req *http.Request) {
 func (app *application) userSignupPost(res http.ResponseWriter, req *http.Request) {
   fmt.Fprintln(res, "Create a new user...")
 }
+
 func (app *application) userLogin(res http.ResponseWriter, req *http.Request) {
-  fmt.Fprintln(res, "Display html form for logging in a user...")
+  data := app.newTemplateData(req)
+  data.Form = userLoginForm{}
+  app.render(res, http.StatusOK, "login.html", data)
 }
+
 func (app *application) userLoginPost(res http.ResponseWriter, req *http.Request) {
   fmt.Fprintln(res, "Authenticate and logging the user...")
 }
+
 func (app *application) userLogoutPost(res http.ResponseWriter, req *http.Request) {
   fmt.Fprintln(res, "Logout the user...")
 }
