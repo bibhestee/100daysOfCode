@@ -170,7 +170,46 @@ func (app *application) userLogin(res http.ResponseWriter, req *http.Request) {
 }
 
 func (app *application) userLoginPost(res http.ResponseWriter, req *http.Request) {
-  fmt.Fprintln(res, "Authenticate and logging the user...")
+  var form userLoginForm
+
+  err := app.decodePostForm(req, &form)
+  if err != nil {
+    app.clientError(res, http.StatusBadRequest)
+    return
+  }
+
+  form.CheckField(validator.NotBlank(form.Email), "email", "This field cannot be blank")
+  form.CheckField(validator.Matches(form.Email, validator.EmailRX), "email", "This field must be a valid email address")
+  form.CheckField(validator.NotBlank(form.Password), "password", "This field cannot be blank")
+
+  if !form.Valid() {
+    data := app.newTemplateData(req)
+    data.Form = form
+    app.render(res, http.StatusUnprocessableEntity, "login.html", data)
+  }
+
+  id, err := app.users.Authenticate(form.Email, form.Password)
+  if err != nil {
+    if errors.Is(err, models.ErrInvalidCredentials) {
+      form.AddNonFieldError("Email or password is incorrect")
+      data := app.newTemplateData(req)
+      data.Form = form
+      app.render(res, http.StatusUnprocessableEntity, "login.html", data)
+    } else {
+      app.serverError(res, err)
+    }
+    return
+  }
+
+  err = app.sessionManager.RenewToken(req.Context())
+  if err != nil {
+    app.serverError(res, err)
+    return
+  }
+
+  app.sessionManager.Put(req.Context(), "authenticatedUserID", id)
+
+  http.Redirect(res, req, "/snippet/create", http.StatusSeeOther)
 }
 
 func (app *application) userLogoutPost(res http.ResponseWriter, req *http.Request) {
