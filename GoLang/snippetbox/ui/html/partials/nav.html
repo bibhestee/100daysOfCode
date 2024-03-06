@@ -2,7 +2,7 @@
 <nav>
   <div>
     <a href="/">Home</a>
-    {{if .isAuthenticated}}
+    {{if .IsAuthenticated}}
       <a href="/snippet/create">Create snippet</a>
     {{end}}
   </div>
@@ -10,7 +10,7 @@
     
     <a href="/user/signup">Signup</a>
     <a href="/user/login">Login</a>
-    {{if .isAuthenticated}}
+    {{if .IsAuthenticated}}
       <form action="/user/logout" method="POST">
         <button>Logout</button>
       </form>
