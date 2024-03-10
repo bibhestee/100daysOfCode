@@ -2,6 +2,7 @@ package main
 
 import (
   "net/http"
+  "github.com/bibhestee/100daysOfCode/GoLang/snippetbox/ui"
   "github.com/julienschmidt/httprouter"
   "github.com/justinas/alice"
 )
@@ -18,9 +19,9 @@ func (app *application) routes() http.Handler {
     app.clientError(res, http.StatusMethodNotAllowed)
   })
 
-  fileServer := http.FileServer(http.Dir("./ui/static"))
+  fileServer := http.FileServer(http.FS(ui.Files))
 
-  router.Handler(http.MethodGet, "/static/*filepath", http.StripPrefix("/static", fileServer))
+  router.Handler(http.MethodGet, "/static/*filepath", fileServer)
 
   dynamic := alice.New(app.sessionManager.LoadAndSave, noSurf, app.authenticate)
 
