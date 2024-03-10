@@ -76,7 +76,7 @@ func (app *application) authenticate(next http.Handler) http.Handler {
 
     exists, err := app.users.Exists(id)
     if err != nil {
-      app.serverError(res, req)
+      app.serverError(res, err)
       return
     }
 
@@ -84,6 +84,6 @@ func (app *application) authenticate(next http.Handler) http.Handler {
       ctx := context.WithValue(req.Context(), isAuthenticatedContextKey, true)
       req = req.WithContext(ctx)
     }
-    next.ServeHTTP()
+    next.ServeHTTP(res, req)
   })
 }
