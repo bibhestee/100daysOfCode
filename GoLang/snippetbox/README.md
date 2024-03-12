@@ -9,11 +9,11 @@
 
 
 ## Pages
-- Home
-- Signup
-- Login
-- Create Snippet
-- View Snippet
+- Home /
+- Signup /signup
+- Login /logim
+- Create Snippet /snippet/create
+- View Snippet /snippet/view/:id
 
 ## Security
 - Csrf Secured
