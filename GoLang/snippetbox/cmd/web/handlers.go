@@ -226,3 +226,9 @@ func (app *application) userLogoutPost(res http.ResponseWriter, req *http.Reques
 func ping(res http.ResponseWriter, req *http.Request) {
   res.Write([]byte("OK"))
 }
+
+func (app *application) about(res http.ResponseWriter, req *http.Request) {
+  data := app.newTemplateData(req)
+
+  app.render(res, http.StatusOK, "about.html", data)
+}
