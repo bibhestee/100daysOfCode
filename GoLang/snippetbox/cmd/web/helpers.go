@@ -15,7 +15,16 @@ func (app *application) serverError(res http.ResponseWriter, err error) {
   trace := fmt.Sprintf("%s\n%s", err.Error(), debug.Stack())
   app.errorLog.Output(2, trace)
 
-  http.Error(res, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+
+  status := http.StatusInternalServerError
+  statusMsg := http.StatusText(status)
+
+  if app.debug {
+    http.Error(res, trace, status)
+    return
+  }
+
+  http.Error(res, statusMsg, status)
 }
 
 
