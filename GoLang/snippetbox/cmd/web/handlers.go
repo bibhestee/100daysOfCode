@@ -232,3 +232,21 @@ func (app *application) about(res http.ResponseWriter, req *http.Request) {
 
   app.render(res, http.StatusOK, "about.html", data)
 }
+
+func (app *application) account(res http.ResponseWriter, req *http.Request) {
+  id := app.sessionManager.GetInt(req.Context(), "authenticatedUserID")
+  user, err := app.users.Get(id)
+  if err != nil {
+    if errors.Is(err, models.ErrNoRecord) {
+      http.Redirect(res, req, "/user/login", http.StatusSeeOther)
+    } else {
+      app.serverError(res, err)
+    }
+    return
+  }
+
+  data := app.newTemplateData(req)
+  data.User = user
+
+  app.render(res, http.StatusOK, "account.html", data)
+}
