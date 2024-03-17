@@ -36,6 +36,8 @@ func (app *application) routes() http.Handler {
   router.Handler(http.MethodGet, "/snippet/create", protected.ThenFunc(app.snippetCreate))
   router.Handler(http.MethodPost, "/snippet/create", protected.ThenFunc(app.snippetCreatePost))
   router.Handler(http.MethodGet, "/account/view", protected.ThenFunc(app.account))
+  router.Handler(http.MethodGet, "/account/password/update", protected.ThenFunc(app.accountPasswordUpdate))
+  router.Handler(http.MethodPost, "/account/password/update", protected.ThenFunc(app.accountPasswordUpdatePost))
 
   // User Routes
   router.Handler(http.MethodGet, "/user/signup", dynamic.ThenFunc(app.userSignup))
