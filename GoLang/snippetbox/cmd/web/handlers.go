@@ -208,7 +208,10 @@ func (app *application) userLoginPost(res http.ResponseWriter, req *http.Request
   }
 
   app.sessionManager.Put(req.Context(), "authenticatedUserID", id)
-
+  urlPath := app.sessionManager.PopString(req.Context(), "urlPath")
+  if urlPath != "" {
+    http.Redirect(res, req, urlPath, http.StatusSeeOther)
+  }
   http.Redirect(res, req, "/snippet/create", http.StatusSeeOther)
 }
 
