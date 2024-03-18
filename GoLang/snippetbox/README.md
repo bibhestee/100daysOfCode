@@ -14,6 +14,9 @@
 - Login /logim
 - Create Snippet /snippet/create
 - View Snippet /snippet/view/:id
+- About /about
+- Account /account/view
+- Change password /account/password/update
 
 ## Security
 - Csrf Secured
