@@ -31,3 +31,23 @@ func TestUserModelExists(t *testing.T) {
   }
 }
 
+func TestUserGet(t *testing.T) {
+
+  db := newTestDB(t)
+  m := UserModel{db}
+
+  t.Run("Valid ID", func(t *testing.T) {
+
+      user, err := m.Get(1)
+
+      assert.Equal(t, user.Email, "alice@example.com")
+      assert.IsError(t, err, nil)
+    })
+
+  t.Run("Invalid ID",func(t *testing.T) {
+    user, err := m.Get(2)
+
+    assert.Equal(t, user, nil)
+    assert.IsError(t, err, ErrInvalidCredentials)
+  } )
+}
