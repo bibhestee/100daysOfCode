@@ -56,3 +56,18 @@ func TestSecureHeaders(t *testing.T) {
   bytes.TrimSpace(body)
   assert.Equal(t, string(body), "OK")
   }
+
+
+func TestMethodNotAllowed(t *testing.T) {
+  app := newTestApplication(t)
+
+  ts := newTestServer(t, app.routes())
+
+  defer ts.Close()
+
+  code, _, body := ts.postForm(t, "/", nil)
+  // Check if status code is equal to http.StatusMethodNotAllowed
+  assert.Equal(t, code, http.StatusMethodNotAllowed)
+  // Check if response is Method Not Allowed
+  assert.Equal(t, string(body), "Method Not Allowed\n")
+}
